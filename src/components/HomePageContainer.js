@@ -73,8 +73,8 @@ class HomePageContainer extends Component {
   render() {
     const { title, filteredData } = this.state;
     return (
-      <PageTemplate pageTitle={title}>
-        <Table pageTitle={title} data={filteredData} />
+      <PageTemplate title={title}>
+        <Table title={title} data={filteredData} />
       </PageTemplate>
     );
   }
