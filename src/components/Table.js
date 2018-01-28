@@ -46,7 +46,6 @@ TableResult.propTypes = {
 };
 
 TableResult.defaultProps = {
-  filter: '*',
   data: []
 };
 

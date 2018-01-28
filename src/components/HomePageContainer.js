@@ -17,16 +17,22 @@ class HomePageContainer extends Component {
 
   constructor(props) {
     super(props);
-    const { title } = props;
+
     this.state = {
       data: [],
       filteredData: [],
-      title
+      title: props.title
     };
   }
 
   componentDidMount() {
     this.fetchProjects();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({
+      title: nextProps.title
+    });
   }
 
   componentDidUpdate(prevProps) {
@@ -36,16 +42,18 @@ class HomePageContainer extends Component {
   }
 
   onRouteChanged = () => {
-    const { location } = this.props;
     const { data } = this.state;
-    const newFilter = this.getFilterValue(location);
-    const filteredData =
-      newFilter === '*'
-        ? data
-        : data.filter(project => project.overallStatus === newFilter);
     this.setState({
-      filteredData
+      filteredData: this.getFilteredData(data)
     });
+  };
+
+  getFilteredData = serverData => {
+    const { location } = this.props;
+    const newFilter = this.getFilterValue(location);
+    return newFilter === '*'
+      ? serverData
+      : serverData.filter(project => project.overallStatus === newFilter);
   };
 
   getFilterValue = location => {
@@ -65,7 +73,7 @@ class HomePageContainer extends Component {
     fetchProjects().then(serverPlans => {
       this.setState({
         data: serverPlans,
-        filteredData: serverPlans
+        filteredData: this.getFilteredData(serverPlans)
       });
     });
   };
@@ -74,7 +82,7 @@ class HomePageContainer extends Component {
     const { title, filteredData } = this.state;
     return (
       <PageTemplate title={title}>
-        <Table title={title} data={filteredData} />
+        <Table data={filteredData} />
       </PageTemplate>
     );
   }

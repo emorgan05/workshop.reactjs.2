@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import PageTitle from './PageTitle';
 
-const StyledHeader = styled.div`
+const StyledPageHeader = styled.div`
   margin-left: 180px;
   margin-top: 1rem;
   padding-left: 2rem;
@@ -15,12 +15,12 @@ const StyledHeader = styled.div`
 const PageHeader = props => {
   const { title } = props;
   return (
-    <StyledHeader>
+    <StyledPageHeader>
       <div>
         <PageTitle title={title} />
         {props.children}
       </div>
-    </StyledHeader>
+    </StyledPageHeader>
   );
 };
 
